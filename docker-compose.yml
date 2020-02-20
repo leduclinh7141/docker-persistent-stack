@@ -15,7 +15,7 @@ services:
             - "mongodb-data:/data/db"
         # user: "${UID_GID}"
         ports:
-            - "27000:27000"
+            - "27000:27017"
         networks:
             - common
         restart: always    
