@@ -11,7 +11,7 @@
         #     MONGO_INITDB_ROOT_USERNAME: root
         #     MONGO_INITDB_ROOT_PASSWORD: somepass
         ports:
-            - "27017:27017"
+            - "27000:27000"
         networks:
             - common
         restart: always   

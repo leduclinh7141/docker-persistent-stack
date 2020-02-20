@@ -13,8 +13,8 @@
         ports:
             - "5432:5432"
         environment: 
-            - POSTGRES_USER=someuser
-            - POSTGRES_PASSWORD=somepassword
+            - POSTGRES_USER=postgre
+            - POSTGRES_PASSWORD=postgre
             # - POSTGRES_DB=default
             # If you want to create multiple database, uncomment this line
             # - POSTGRES_MULTIPLE_DATABASES=db1,db2,db3
