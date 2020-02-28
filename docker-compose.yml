@@ -7,6 +7,17 @@ volumes:
   postgres-data:
   redis-data:
 services:
+    eventstore:
+        container_name: eventstore
+        image: eventstore/eventstore:latest
+        # user: "${UID_GID}"
+        ports:
+            - "1113:1113"
+            - "2113:2113"
+        networks:
+            - common
+        restart: always 
+ 
     mongo:
         container_name: mongo
         image: mongo:latest
