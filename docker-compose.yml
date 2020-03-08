@@ -6,7 +6,37 @@ volumes:
   mongodb-replica-data:
   postgres-data:
   redis-data:
+  mssql-data:
+    driver: local
 services:
+    sqlserver:
+        image: microsoft/mssql-server-linux:2017-latest
+        container_name: sqlserver
+        hostname: sqlserver
+        ports:
+        - 1433:1433
+        volumes: 
+        - ./init-data:/init-data
+        - ./start-up.sh:/start-up.sh
+        - mssql-data:/var/opt/mssql
+        env_file: 
+        - .env
+        command: "sh -c '/start-up.sh & /opt/mssql/bin/sqlservr;'"
+        networks:
+            - common
+        restart: always
+
+    eventstore:
+        container_name: eventstore
+        image: eventstore/eventstore:latest
+        # user: "${UID_GID}"
+        ports:
+            - "1113:1113"
+            - "2113:2113"
+        networks:
+            - common
+        restart: always
+
     mongo:
         container_name: mongo
         image: mongo:latest
