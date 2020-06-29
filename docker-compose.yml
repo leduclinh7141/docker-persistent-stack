@@ -14,19 +14,18 @@ services:
         container_name: sqlserver
         hostname: sqlserver
         ports:
-            - 1433:1433
+            - 11433:1433
         volumes:
             - ./init-data:/init-data
             - ./start-up.sh:/start-up.sh
             - mssql-data:/var/opt/mssql
-        env_file: 
+        env_file:
             - .env
         command: "sh -c '/start-up.sh & /opt/mssql/bin/sqlservr;'"
         # command: "sh -c '/start-up.sh & /opt/mssql/bin/sqlservr;'"
         networks:
             - common
         restart: always
-
     # eventstore:
     #     container_name: eventstore
     #     image: eventstore/eventstore:latest
@@ -37,7 +36,6 @@ services:
     #     networks:
     #         - common
     #     restart: always
-
     # mongo:
     #     container_name: mongo
     #     image: mongo:latest
@@ -50,7 +48,6 @@ services:
     #     networks:
     #         - common
     #     restart: always
-
     mongo-rs:
         container_name: mongo-rs
         image: linhld/mongodb-replicaset:development
@@ -65,8 +62,9 @@ services:
             - "27003:27003"
         networks:
             - common
+        extra_hosts:
+            - "mongo-rs:127.0.0.1"
         restart: always
-
     # postgresql:
     #     container_name: postgresql
     #     image: postgres:alpine
@@ -90,17 +88,16 @@ services:
     #     networks:
     #         - common
     #     restart: always
-
-    redis:
-        image: "bitnami/redis"
-        container_name: redis
-        ports:
-            - "6380:6379"
-        networks:
-            - common
-        environment:
-            - ALLOW_EMPTY_PASSWORD=yes
-        restart: always
+    # redis:
+    #     image: "bitnami/redis"
+    #     container_name: redis
+    #     ports:
+    #         - "6380:6379"
+    #     networks:
+    #         - common
+    #     environment:
+    #         - ALLOW_EMPTY_PASSWORD=yes
+    #     restart: always
     # mysql:
     #     container_name: mysql
     #     image: mysql:5.7
