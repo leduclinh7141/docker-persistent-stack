@@ -36,18 +36,18 @@ services:
     #     networks:
     #         - common
     #     restart: always
-    # mongo:
-    #     container_name: mongo
-    #     image: mongo:latest
-    #     volumes:
-    #         # - ./data/mongo:/data/db
-    #         - "mongodb-data:/data/db"
-    #     # user: "${UID_GID}"
-    #     ports:
-    #         - "27000:27017"
-    #     networks:
-    #         - common
-    #     restart: always
+    mongo:
+        container_name: mongo
+        image: mongo:latest
+        volumes:
+            # - ./data/mongo:/data/db
+            - "mongodb-data:/data/db"
+        # user: "${UID_GID}"
+        ports:
+            - "27020:27017"
+        networks:
+            - common
+        restart: always
     mongo-rs:
         container_name: mongo-rs
         image: linhld/mongodb-replicaset:development
@@ -88,16 +88,16 @@ services:
     #     networks:
     #         - common
     #     restart: always
-    # redis:
-    #     image: "bitnami/redis"
-    #     container_name: redis
-    #     ports:
-    #         - "6380:6379"
-    #     networks:
-    #         - common
-    #     environment:
-    #         - ALLOW_EMPTY_PASSWORD=yes
-    #     restart: always
+    redis:
+        image: "bitnami/redis"
+        container_name: redis
+        ports:
+            - "16379:6379"
+        networks:
+            - common
+        environment:
+            - ALLOW_EMPTY_PASSWORD=yes
+        restart: always
     # mysql:
     #     container_name: mysql
     #     image: mysql:5.7
