@@ -22,20 +22,19 @@ services:
         env_file:
             - .env
         command: "sh -c '/start-up.sh & /opt/mssql/bin/sqlservr;'"
-        # command: "sh -c '/start-up.sh & /opt/mssql/bin/sqlservr;'"
         networks:
             - common
         restart: always
-    # eventstore:
-    #     container_name: eventstore
-    #     image: eventstore/eventstore:latest
-    #     # user: "${UID_GID}"
-    #     ports:
-    #         - "1113:1113"
-    #         - "2113:2113"
-    #     networks:
-    #         - common
-    #     restart: always
+    redis:
+        image: "bitnami/redis"
+        container_name: redis
+        ports:
+            - "16379:6379"
+        networks:
+            - common
+        environment:
+            - ALLOW_EMPTY_PASSWORD=yes
+        restart: always
     mongo:
         container_name: mongo
         image: mongo:latest
@@ -44,7 +43,7 @@ services:
             - "mongodb-data:/data/db"
         # user: "${UID_GID}"
         ports:
-            - "27020:27017"
+            - "27000:27017"
         networks:
             - common
         restart: always
@@ -65,6 +64,16 @@ services:
         extra_hosts:
             - "mongo-rs:127.0.0.1"
         restart: always
+    # eventstore:
+    #     container_name: eventstore
+    #     image: eventstore/eventstore:latest
+    #     # user: "${UID_GID}"
+    #     ports:
+    #         - "1113:1113"
+    #         - "2113:2113"
+    #     networks:
+    #         - common
+    #     restart: always
     # postgresql:
     #     container_name: postgresql
     #     image: postgres:alpine
@@ -78,7 +87,7 @@ services:
     #         # - ./config/postgresql/init_script:/docker-entrypoint-initdb.d
     #     # user: "${UID_GID}"
     #     ports:
-    #         - "5432:5432"
+    #         - "15432:5432"
     #     environment:
     #         - POSTGRES_USER=postgre
     #         - POSTGRES_PASSWORD=postgre
@@ -88,16 +97,6 @@ services:
     #     networks:
     #         - common
     #     restart: always
-    redis:
-        image: "bitnami/redis"
-        container_name: redis
-        ports:
-            - "16379:6379"
-        networks:
-            - common
-        environment:
-            - ALLOW_EMPTY_PASSWORD=yes
-        restart: always
     # mysql:
     #     container_name: mysql
     #     image: mysql:5.7
