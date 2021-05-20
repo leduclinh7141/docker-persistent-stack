@@ -1,4 +1,4 @@
-version: "2"
+version: "3"
 networks:
     common:
 volumes:
@@ -32,18 +32,23 @@ services:
             - common
         restart: always
     sqlserver:
-        image: microsoft/mssql-server-linux:2017-latest
         container_name: sqlserver
-        hostname: sqlserver
+        image: mcr.microsoft.com/mssql/server:2017-latest
+        # hostname: sqlserver
         ports:
             - 1433:1433
         volumes:
-            - ./init-data:/init-data
-            - ./start-up.sh:/start-up.sh
+            # - ./init-data:/init-data
+            # - ./start-up.sh:/start-up.sh
             - mssql-data:/var/opt/mssql
+        # user: "${UID_GID}"
         env_file:
             - .env
-        command: "sh -c '/start-up.sh & /opt/mssql/bin/sqlservr;'"
+        # command: "sh -c 'start-up.sh & /opt/mssql/bin/sqlservr;'"
+        # environment:
+        #     - ACCEPT_EULA=Y
+        #     - SA_PASSWORD=P1assword
+        #     - MSSQL_COLLATION=Japanese_CI_AS
         networks:
             - common
         restart: always
@@ -110,7 +115,7 @@ services:
             # - ./config/postgresql/init_script:/docker-entrypoint-initdb.d
         # user: "${UID_GID}"
         ports:
-            - "5432:5432"
+            - "54321:5432"
         environment:
             - POSTGRES_USER=${DB_USER}
             - POSTGRES_PASSWORD=${DB_USER}
