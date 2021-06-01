@@ -237,9 +237,9 @@ services:
       - 10990:10990
     depends_on:
       - postgres
-    networks:
-      - common
-    restart: always
+    # networks:
+    #   - common
+    # restart: always
   postgres:
     image: postgres
     volumes:
@@ -249,8 +249,8 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: P1assword
       POSTGRES_MULTIPLE_DATABASES: keycloak
-    ports:
-      - '5432:5432'
-    networks:
-      - common
-    restart: always
+    # ports:
+    #   - '5432:5432'
+    # networks:
+    #   - common
+    # restart: always
