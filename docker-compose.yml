@@ -219,6 +219,8 @@ services:
       ]
     volumes:
       - ./realm-config:/opt/jboss/keycloak/realm-config
+      - ./keycloak-theme/alfresco:/opt/jboss/keycloak/themes/alfresco
+      - ./keycloak-theme/keycloak-custom:/opt/jboss/keycloak/themes/keycloak-custom
       - keycloak-data:/var/lib/keycloak/data
     environment:
       - KEYCLOAK_USER=admin
