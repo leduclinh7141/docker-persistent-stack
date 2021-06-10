@@ -45,6 +45,28 @@ services:
   #     networks:
   #         - common
   #     restart: always
+  # eventstore:
+  #     container_name: eventstore
+  #     image: eventstore/eventstore:latest
+  #     ports:
+  #         - "1113:1113"
+  #         - "2113:2113"
+  #     networks:
+  #         - common
+  #     restart: always
+  #   mysql:
+  #     container_name: mysql
+  #     image: mysql:5.7
+  #     volumes:
+  #       - mysql-data:/var/lib/mysql
+  #     user: '${UID_GID}'
+  #     ports:
+  #       - '3306:3306'
+  #     environment:
+  #       MYSQL_ROOT_PASSWORD: 'justapassword'
+  #     networks:
+  #       - common
+  #     restart: always
   redis:
     image: 'bitnami/redis'
     container_name: redis
@@ -84,33 +106,13 @@ services:
     extra_hosts:
       - 'mongo-rs:127.0.0.1'
     restart: always
-  # eventstore:
-  #     container_name: eventstore
-  #     image: eventstore/eventstore:latest
-  #     ports:
-  #         - "1113:1113"
-  #         - "2113:2113"
-  #     networks:
-  #         - common
-  #     restart: always
-  #   mysql:
-  #     container_name: mysql
-  #     image: mysql:5.7
-  #     volumes:
-  #       - mysql-data:/var/lib/mysql
-  #     user: '${UID_GID}'
-  #     ports:
-  #       - '3306:3306'
-  #     environment:
-  #       MYSQL_ROOT_PASSWORD: 'justapassword'
-  #     networks:
-  #       - common
-  #     restart: always
+
   mssql:
     container_name: mssql
     image: mcr.microsoft.com/mssql/server:2019-CU9-ubuntu-16.04
-    volumes:
-      - mssql-data:/var/opt/mssql/data/
+    # volumes are not supported on macOS
+    # volumes:
+    #   - mssql-data:/var/opt/mssql/data/
     env_file:
       - .env
     ports:
@@ -188,7 +190,7 @@ services:
     env_file:
       - .env
     ports:
-      - 9080:9080
+      - 5017:9080
       - 9443:9443
       - 10990:10990
     depends_on:
@@ -201,6 +203,7 @@ services:
     image: postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./script-postgresql:/docker-entrypoint-initdb.d
     env_file:
       - .env
     ports:
