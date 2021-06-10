@@ -219,6 +219,8 @@ services:
       ]
     volumes:
       - ./realm-config:/opt/jboss/keycloak/realm-config
+      - ./keycloak-theme/alfresco:/opt/jboss/keycloak/themes/alfresco
+      - ./keycloak-theme/keycloak-custom:/opt/jboss/keycloak/themes/keycloak-custom
       - keycloak-data:/var/lib/keycloak/data
     environment:
       - KEYCLOAK_USER=admin
@@ -237,9 +239,9 @@ services:
       - 10990:10990
     depends_on:
       - postgres
-    # networks:
-    #   - common
-    # restart: always
+    networks:
+      - common
+    restart: always
   postgres:
     image: postgres
     volumes:
@@ -249,8 +251,8 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: P1assword
       POSTGRES_MULTIPLE_DATABASES: keycloak
-    # ports:
-    #   - '5432:5432'
-    # networks:
-    #   - common
-    # restart: always
+    ports:
+      - '5432:5432'
+    networks:
+      - common
+    restart: always
