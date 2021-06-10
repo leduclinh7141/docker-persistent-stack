@@ -190,7 +190,7 @@ services:
     env_file:
       - .env
     ports:
-      - 5017:9080
+      - 9080:9080
       - 9443:9443
       - 10990:10990
     depends_on:
