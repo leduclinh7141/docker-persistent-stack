@@ -114,7 +114,7 @@
         <div class="col-xs-12 col-sm-4">
         <#if properties.displayCommunityLinks = "true">
           <div class="card-pf h-m">
-            <h3><a href="http://www.keycloak.org"><img src="welcome-content/keycloak-project.png">Keycloak Project <i class="fa fa-angle-right link" aria-hidden="true"></i></a></h3>
+            <h3><a href="http://www.keycloak.org"><img src="welcome-content/keycloak-project.png">OndoMENU Project <i class="fa fa-angle-right link" aria-hidden="true"></i></a></h3>
           </div>
           <div class="card-pf h-m">
             <h3><a href="https://groups.google.com/forum/#!forum/keycloak-user"><img src="welcome-content/mail.png">Mailing List <i class="fa fa-angle-right link" aria-hidden="true"></i></a></h3>
