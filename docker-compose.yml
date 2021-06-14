@@ -186,7 +186,7 @@ services:
       - ./realm-config:/opt/jboss/keycloak/realm-config
       - ./keycloak-theme/alfresco:/opt/jboss/keycloak/themes/alfresco
       - ./keycloak-theme/keycloak-custom:/opt/jboss/keycloak/themes/keycloak-custom
-      - ./keycloak-theme/base-custom/login/messages/messages_ja.properties:/opt/jboss/keycloak/themes/base/login/messages/messages_ja.properties
+      - ./keycloak-theme/base-custom/login/messages/:/opt/jboss/keycloak/themes/base/login/messages/
       - keycloak-data:/var/lib/keycloak/data
     env_file:
       - .env
