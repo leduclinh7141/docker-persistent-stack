@@ -184,7 +184,6 @@ services:
       ]
     volumes:
       - ./realm-config:/opt/jboss/keycloak/realm-config
-      - ./keycloak-theme/alfresco:/opt/jboss/keycloak/themes/alfresco
       - ./keycloak-theme/keycloak-custom:/opt/jboss/keycloak/themes/keycloak-custom
       - ./keycloak-theme/base-custom/account/messages:/opt/jboss/keycloak/themes/base/account/messages
       - ./keycloak-theme/base-custom/admin/messages:/opt/jboss/keycloak/themes/base/admin/messages
