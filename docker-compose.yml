@@ -170,7 +170,7 @@ services:
     restart: always
   keycloak:
     container_name: keycloak
-    image: jboss/keycloak:latest
+    image: jboss/keycloak:14.0.0
     command:
       [
         '-b',
