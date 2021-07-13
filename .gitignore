@@ -3,3 +3,5 @@
 *.env
 *.env*
 .DS_Store
+docker-compose-20219619.yml
+.cache_ggshield
