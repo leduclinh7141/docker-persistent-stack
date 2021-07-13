@@ -10,8 +10,8 @@ volumes:
     driver: local
   postgres_data:
     driver: local
-  mysql-data:
-    driver: local
+  # mysql-data:
+  #   driver: local
   redis-data:
     driver: local
   keycloak-data:
@@ -20,8 +20,8 @@ volumes:
     driver: local
   graylog_data:
     driver: local
-  mssql-data:
-    driver: local
+  # mssql-data:
+  #   driver: local
 services:
   # neo4j:
   #     container_name: neo4j
@@ -68,7 +68,7 @@ services:
   #       - common
   #     restart: always
   redis:
-    image: 'bitnami/redis'
+    image: bitnami/redis
     container_name: redis
     ports:
       - '6379:6379'
@@ -79,7 +79,7 @@ services:
     restart: always
   mongo:
     container_name: mongo
-    image: mongo:latest
+    image: bitnami/mongodb:latest
     volumes:
       - 'mongodb-data:/data/db'
     ports:
@@ -89,38 +89,37 @@ services:
     env_file:
       - .env
     restart: always
-  mongo-rs:
-    container_name: mongo-rs
-    image: linhld/mongodb-replicaset:development
-    hostname: mongo-rs
-    volumes:
-      - 'mongodb-replica-data:/data'
-    ports:
-      - '27001:27001'
-      - '27002:27002'
-      - '27003:27003'
-    networks:
-      - common
-    env_file:
-      - .env
-    extra_hosts:
-      - 'mongo-rs:127.0.0.1'
-    restart: always
-
-  mssql:
-    container_name: mssql
-    image: mcr.microsoft.com/mssql/server:2019-CU9-ubuntu-16.04
-    # volumes are not supported on macOS
-    # volumes:
-    #   - mssql-data:/var/opt/mssql/data/
-    env_file:
-      - .env
-    ports:
-      - 1433:1433
-    command: /bin/bash -c '/opt/mssql/bin/sqlservr & echo "wait $$MSSQL_SLEEP sec for DB to start "; sleep $$MSSQL_SLEEP; /opt/mssql-tools/bin/sqlcmd -U sa -P $$SA_PASSWORD -d tempdb -q "EXIT(CREATE DATABASE $$MSSQL_DATABASE)"; wait;'
-    networks:
-      - common
-    restart: always
+  # mongo-rs:
+  #   container_name: mongo-rs
+  #   image: linhld/mongodb-replicaset:development
+  #   hostname: mongo-rs
+  #   volumes:
+  #     - 'mongodb-replica-data:/data'
+  #   ports:
+  #     - '27001:27001'
+  #     - '27002:27002'
+  #     - '27003:27003'
+  #   networks:
+  #     - common
+  #   env_file:
+  #     - .env
+  #   extra_hosts:
+  #     - 'mongo-rs:127.0.0.1'
+  #   restart: always
+  # mssql:
+  #   container_name: mssql
+  #   image: mcr.microsoft.com/mssql/server:2019-CU9-ubuntu-16.04
+  #   # volumes are not supported on macOS
+  #   # volumes:
+  #   #   - mssql-data:/var/opt/mssql/data/
+  #   env_file:
+  #     - .env
+  #   ports:
+  #     - 1433:1433
+  #   command: /bin/bash -c '/opt/mssql/bin/sqlservr & echo "wait $$MSSQL_SLEEP sec for DB to start "; sleep $$MSSQL_SLEEP; /opt/mssql-tools/bin/sqlcmd -U sa -P $$SA_PASSWORD -d tempdb -q "EXIT(CREATE DATABASE $$MSSQL_DATABASE)"; wait;'
+  #   networks:
+  #     - common
+  #   restart: always
   elasticsearch:
     container_name: elasticsearch
     image: docker.elastic.co/elasticsearch/elasticsearch:7.9.3
@@ -134,40 +133,40 @@ services:
     networks:
       - common
     restart: always
-  kafka:
-    container_name: kafka
-    image: confluentinc/cp-kafka:5.5.3
-    ports:
-      - 9092:9092
-    env_file:
-      - .env
-    networks:
-      - common
-    restart: always
-  zookeeper:
-    container_name: zookeeper
-    image: confluentinc/cp-zookeeper:5.5.3
-    env_file:
-      - .env
-    networks:
-      - common
-    restart: always
-  jhipster-registry:
-    container_name: jhipster-registry
-    image: jhipster/jhipster-registry:v6.7.1
-    volumes:
-      - ./central-server-config:/central-config
-    # When run with the "dev" Spring profile, the JHipster Registry will
-    # read the config from the local filesystem (central-server-config directory)
-    # When run with the "prod" Spring profile, it will read the configuration from a Git repository
-    # See https://www.jhipster.tech/jhipster-registry/#spring-cloud-config
-    env_file:
-      - .env
-    ports:
-      - 8761:8761
-    networks:
-      - common
-    restart: always
+  # kafka:
+  #   container_name: kafka
+  #   image: confluentinc/cp-kafka:5.5.3
+  #   ports:
+  #     - 9092:9092
+  #   env_file:
+  #     - .env
+  #   networks:
+  #     - common
+  #   restart: always
+  # zookeeper:
+  #   container_name: zookeeper
+  #   image: confluentinc/cp-zookeeper:5.5.3
+  #   env_file:
+  #     - .env
+  #   networks:
+  #     - common
+  #   restart: always
+  # jhipster-registry:
+  #   container_name: jhipster-registry
+  #   image: jhipster/jhipster-registry:v6.7.1
+  #   volumes:
+  #     - ./central-server-config:/central-config
+  #   # When run with the "dev" Spring profile, the JHipster Registry will
+  #   # read the config from the local filesystem (central-server-config directory)
+  #   # When run with the "prod" Spring profile, it will read the configuration from a Git repository
+  #   # See https://www.jhipster.tech/jhipster-registry/#spring-cloud-config
+  #   env_file:
+  #     - .env
+  #   ports:
+  #     - 8761:8761
+  #   networks:
+  #     - common
+  #   restart: always
   keycloak:
     container_name: keycloak
     image: jboss/keycloak:14.0.0
@@ -221,12 +220,6 @@ services:
       - graylog_data:/usr/share/graylog/data
     env_file:
       - .env
-    # environment:
-    #   # CHANGE ME (must be at least 16 characters)!
-    #   - GRAYLOG_PASSWORD_SECRET=${GRAYLOG_PASSWORD_SECRET}
-    #   # Password: admin
-    #   - GRAYLOG_ROOT_PASSWORD_SHA2=8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918
-    #   - GRAYLOG_HTTP_EXTERNAL_URI=http://127.0.0.1:9000/
     entrypoint: /usr/bin/tini -- wait-for-it elasticsearch:9200 --  /docker-entrypoint.sh
     links:
       - mongo:mongo

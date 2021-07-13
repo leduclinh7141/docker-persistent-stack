@@ -2,3 +2,4 @@
 *.sublime-workspace
 *.env
 *.env*
+.DS_Store
