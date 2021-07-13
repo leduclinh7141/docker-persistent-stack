@@ -4,10 +4,10 @@ networks:
 volumes:
   # neo4j-data:
   #   driver: local
-  mongodb-data:
-    driver: local
-  mongodb-replica-data:
-    driver: local
+  # mongodb-data:
+  #   driver: local
+  # mongodb-replica-data:
+  #   driver: local
   postgres_data:
     driver: local
   # mysql-data:
@@ -16,10 +16,10 @@ volumes:
     driver: local
   keycloak-data:
     driver: local
-  elasticsearch-data:
-    driver: local
-  graylog_data:
-    driver: local
+  # elasticsearch-data:
+  #   driver: local
+  # graylog_data:
+  #   driver: local
   # mssql-data:
   #   driver: local
 services:
@@ -77,18 +77,18 @@ services:
     env_file:
       - .env
     restart: always
-  mongo:
-    container_name: mongo
-    image: bitnami/mongodb:latest
-    volumes:
-      - 'mongodb-data:/data/db'
-    ports:
-      - '27017:27017'
-    networks:
-      - common
-    env_file:
-      - .env
-    restart: always
+  # mongo:
+  #   container_name: mongo
+  #   image: bitnami/mongodb:latest
+  #   volumes:
+  #     - 'mongodb-data:/data/db'
+  #   ports:
+  #     - '27017:27017'
+  #   networks:
+  #     - common
+  #   env_file:
+  #     - .env
+  #   restart: always
   # mongo-rs:
   #   container_name: mongo-rs
   #   image: linhld/mongodb-replicaset:development
@@ -120,19 +120,19 @@ services:
   #   networks:
   #     - common
   #   restart: always
-  elasticsearch:
-    container_name: elasticsearch
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.3
-    volumes:
-      - elasticsearch-data:/usr/share/elasticsearch/data/
-    ports:
-      - 9200:9200
-      - 9300:9300
-    env_file:
-      - .env
-    networks:
-      - common
-    restart: always
+  # elasticsearch:
+  #   container_name: elasticsearch
+  #   image: docker.elastic.co/elasticsearch/elasticsearch:7.9.3
+  #   volumes:
+  #     - elasticsearch-data:/usr/share/elasticsearch/data/
+  #   ports:
+  #     - 9200:9200
+  #     - 9300:9300
+  #   env_file:
+  #     - .env
+  #   networks:
+  #     - common
+  #   restart: always
   # kafka:
   #   container_name: kafka
   #   image: confluentinc/cp-kafka:5.5.3
@@ -213,31 +213,31 @@ services:
     networks:
       - common
     restart: always
-  graylog:
-    container_name: graylog
-    image: graylog/graylog:4.0
-    volumes:
-      - graylog_data:/usr/share/graylog/data
-    env_file:
-      - .env
-    entrypoint: /usr/bin/tini -- wait-for-it elasticsearch:9200 --  /docker-entrypoint.sh
-    links:
-      - mongo:mongo
-      - elasticsearch
-    networks:
-      - common
-    restart: always
-    depends_on:
-      - mongo
-      - elasticsearch
-    ports:
-      # Graylog web interface and REST API
-      - 9000:9000
-      # Syslog TCP
-      - 1514:1514
-      # Syslog UDP
-      - 1514:1514/udp
-      # GELF TCP
-      - 12201:12201
-      # GELF UDP
-      - 12201:12201/udp
+  # graylog:
+  #   container_name: graylog
+  #   image: graylog/graylog:4.0
+  #   volumes:
+  #     - graylog_data:/usr/share/graylog/data
+  #   env_file:
+  #     - .env
+  #   entrypoint: /usr/bin/tini -- wait-for-it elasticsearch:9200 --  /docker-entrypoint.sh
+  #   links:
+  #     - mongo
+  #     - elasticsearch
+  #   networks:
+  #     - common
+  #   restart: always
+  #   depends_on:
+  #     - mongo
+  #     - elasticsearch
+  #   ports:
+  #     # Graylog web interface and REST API
+  #     - 9000:9000
+  #     # Syslog TCP
+  #     - 1514:1514
+  #     # Syslog UDP
+  #     - 1514:1514/udp
+  #     # GELF TCP
+  #     - 12201:12201
+  #     # GELF UDP
+  #     - 12201:12201/udp
